@@ -51,7 +51,7 @@ class SystemScreen(BaseScreen):
             CircularGauge(label="MEMORY", unit="%"),
         ]
         for i, gauge in enumerate(self._gauges):
-            gauge.setRange(0, 100)
+            gauge.set_range(0, 100)
             gauge.setFixedHeight(160)
             gauge_layout.addWidget(gauge, 0, i)
         layout.addLayout(gauge_layout)

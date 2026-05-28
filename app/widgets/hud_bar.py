@@ -5,9 +5,22 @@ Used for storage, network, and other linear metrics. Draws a segmented
 bar with accent color matching the active theme.
 """
 
+from typing import Union
+
 from PyQt6.QtCore import Qt, QRectF
-from PyQt6.QtGui import QPainter, QColor, QPen
+from PyQt6.QtGui import QPainter, QColor, QPen, QFont
 from PyQt6.QtWidgets import QWidget
+
+ColorInput = Union[tuple[int, int, int], QColor, None]
+
+
+def _to_color(c: ColorInput) -> QColor:
+    """Normalize a color input to QColor."""
+    if isinstance(c, QColor):
+        return c
+    if c is None:
+        return QColor(0, 255, 136)
+    return QColor(c[0], c[1], c[2])
 
 
 class HUDBar(QWidget):
@@ -27,7 +40,7 @@ class HUDBar(QWidget):
         self._minimum = minimum
         self._maximum = maximum
         self._label = label
-        self._color = color or QColor(0, 255, 136)
+        self._color = _to_color(color)
         self.setFixedHeight(32)
 
     def set_value(self, value: float) -> None:
@@ -40,8 +53,8 @@ class HUDBar(QWidget):
         self._label = label
         self.update()
 
-    def set_color(self, color: QColor) -> None:
-        self._color = color
+    def set_color(self, color: ColorInput) -> None:
+        self._color = _to_color(color)
         self.update()
 
     def set_range(self, minimum: float, maximum: float) -> None:
@@ -67,7 +80,7 @@ class HUDBar(QWidget):
         bg_pen = QPen(QColor(30, 30, 30), bar_height)
         bg_pen.setCapStyle(Qt.PenCapStyle.FlatCap)
         painter.setPen(bg_pen)
-        painter.drawLine(margin, height / 2, width - margin, height / 2)
+        painter.drawLine(margin, height // 2, width - margin, height // 2)
 
         # Value bar
         val_color = QColor(self._color)
@@ -75,7 +88,7 @@ class HUDBar(QWidget):
         fill_pen = QPen(val_color, bar_height)
         fill_pen.setCapStyle(Qt.PenCapStyle.FlatCap)
         painter.setPen(fill_pen)
-        painter.drawLine(margin, height / 2, margin + bar_width, height / 2)
+        painter.drawLine(margin, height // 2, margin + int(bar_width), height // 2)
 
         # End cap dot
         cap_color = QColor(self._color)
@@ -83,7 +96,7 @@ class HUDBar(QWidget):
         painter.setPen(Qt.PenStyle.NoPen)
         painter.setBrush(cap_color)
         cap_x = margin + bar_width
-        painter.drawEllipse(QRectF(cap_x - 3, height / 2 - 3, 6, 6))
+        painter.drawEllipse(QRectF(cap_x - 3, height // 2 - 3, 6, 6))
 
         # Label
         if self._label:

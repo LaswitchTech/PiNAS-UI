@@ -212,8 +212,8 @@ class MainWindow(QMainWindow):
         self._config = self._load_config()
 
         self._init_window()
-        self._apply_theme(self._theme_manager.current)
         self._build_ui()
+        self._apply_theme(self._theme_manager.current)
         self._start_poller()
         self._theme_manager.subscribe(self._on_theme_changed)
 
