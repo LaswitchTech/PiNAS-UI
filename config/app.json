@@ -1,0 +1,27 @@
+{
+    "app": {
+        "name": "PiNAS",
+        "version": "0.1.0",
+        "fullscreen": true
+    },
+    "screen": {
+        "width": 480,
+        "height": 800
+    },
+    "polling": {
+        "interval_ms": 2000,
+        "cpu_enabled": true,
+        "memory_enabled": true,
+        "storage_enabled": true,
+        "temperature_enabled": true,
+        "network_enabled": true
+    },
+    "theme": {
+        "preset": "unsc_green"
+    },
+    "ui": {
+        "font_family": "monospace",
+        "font_size": 12,
+        "animation_duration_ms": 300
+    }
+}
