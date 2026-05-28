@@ -221,9 +221,9 @@ class MainWindow(QMainWindow):
     # -- Window setup ------ --------- -- -------- ---------- --------- ---------
 
     def _init_window(self) -> None:
-        screen_cfg = self._config.get("screen", {"width": 480, "height": 800})
+        # Fixed to physical screen size — no resizing on embedded display
         self.setWindowTitle("PiNAS")
-        self.resize(screen_cfg.get("width", 480), screen_cfg.get("height", 800))
+        self.setFixedSize(480, 800)
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
 
