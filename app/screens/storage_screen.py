@@ -30,12 +30,13 @@ class StorageScreen:
 
         # Stub content
         stub = QFrame()
+        stub.setProperty("class", "hud-panel")
         stub.setFixedHeight(200)
         stub.setStyleSheet("""
             QFrame {
                 border: 1px dashed #333;
                 border-left: 2px solid #00ff8840;
-                background-color: #111111;
+                background-color: transparent;
             }
         """)
         stub_layout = QVBoxLayout(stub)

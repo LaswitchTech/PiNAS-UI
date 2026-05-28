@@ -42,7 +42,7 @@ class ThemeName(str, Enum):
 
 _PALETTES: dict[ThemeName, ThemePalette] = {
     ThemeName.UNSC_GREEN: ThemePalette(
-        primary="#00ff88", secondary="#00cc66", background="#0a0a0a",
+        primary="#00ff88", secondary="#00cc66", background="#000000",
         panel_bg="#0d1a0d", panel_border="#1a3a2a", text="#e0ffe8",
         text_dim="#608060", glow="#00ff8840", success="#00ff88",
         warning="#ffaa00", danger="#ff3344", grid_line="#112211",
@@ -128,6 +128,11 @@ def generate_qss(palette: ThemePalette, font_size: int = 12) -> str:
             background-color: {pb_rgb};
             border-left: 2px solid {palette.panel_border};
             border-radius: 0px;
+        }}
+
+        QFrame.hud-panel {{
+            background-color: transparent;
+            border-left: 2px solid {palette.panel_border};
         }}
 
         QLabel {{

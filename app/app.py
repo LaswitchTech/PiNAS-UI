@@ -27,6 +27,7 @@ from app.services.system_poller import SystemPoller, SystemMetrics
 from app.screens.system_screen import SystemScreen
 from app.screens.storage_screen import StorageScreen
 from app.screens.settings_screen import SettingsScreen
+from app.widgets.chamfered_frame import ChamferedFrame
 
 logger = logging.getLogger(__name__)
 
@@ -280,13 +281,20 @@ class MainWindow(QMainWindow):
             SettingsScreen(self),
         ]
 
-        # Build screen container
-        self._container = ScreenContainer(self)
+        # Chamfered border frame (clips children to inner area)
+        self._chamfered_frame = ChamferedFrame()
+        root_layout = QVBoxLayout(self._chamfered_frame)
+        root_layout.setContentsMargins(0, 0, 0, 0)
+        root_layout.setSpacing(0)
+        root_layout.addWidget(self._make_screen_container())
+        self.setCentralWidget(self._chamfered_frame)
+
+    def _make_screen_container(self) -> QWidget:
+        """Build the swipeable screen container."""
+        self._container = ScreenContainer(self._chamfered_frame)
         for i, screen in enumerate(self._screens):
             self._container.add_screen(screen, name=f"screen_{i}")
-
-        # Set as central widget
-        self.setCentralWidget(self._container)
+        return self._container
 
     # -- Touch/swipe handling ------ -- -------- ---------- ---------
 

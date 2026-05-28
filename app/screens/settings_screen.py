@@ -35,11 +35,12 @@ class SettingsScreen:
 
         for section_title, items in sections:
             frame = QFrame()
+            frame.setProperty("class", "hud-panel")
             frame.setStyleSheet("""
                 QFrame {
                     border: 1px solid #1a3a2a;
                     border-left: 2px solid #00ff88;
-                    background-color: #0d1a0d;
+                    background-color: transparent;
                 }
             """)
             section_layout = QVBoxLayout(frame)
